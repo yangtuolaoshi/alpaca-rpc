@@ -1,10 +1,16 @@
 package love.ytlsnb.rpc;
 
 import lombok.extern.slf4j.Slf4j;
+import love.ytlsnb.common.model.rpc.ClientMetaInfo;
 import love.ytlsnb.rpc.config.RPCConfig;
+import love.ytlsnb.rpc.config.RegistryConfig;
+import love.ytlsnb.rpc.registry.Registry;
+import love.ytlsnb.rpc.registry.RegistryFactory;
 import love.ytlsnb.rpc.utils.ConfigUtils;
 
-import static love.ytlsnb.rpc.constant.RPCConstant.RPC_PREFIX;
+import java.util.concurrent.ExecutionException;
+
+import static love.ytlsnb.rpc.constant.RPCConstant.*;
 
 /**
  * RPC框架启动类
@@ -17,15 +23,54 @@ public class RPCApplication {
     private static volatile RPCConfig rpcConfig;
 
     /**
+     * 注册中心配置
+     */
+    private static volatile RegistryConfig registryConfig;
+
+    /**
      * RPC框架初始化
      */
     public static void init() {
-        RPCApplication.rpcConfig = ConfigUtils.loadConfig(RPCConfig.class, RPC_PREFIX);
-        log.info("读取配置文件: {}", rpcConfig.toString());
+        // 读取配置文件
+        rpcConfig = ConfigUtils.loadConfig(RPCConfig.class, RPC_PREFIX);
+        log.info("读取全局配置: {}", rpcConfig.toString());
+        registryConfig = ConfigUtils.loadConfig(RegistryConfig.class, RPC_REGISTRY_PREFIX);
+        log.info("读取注册中心配置: {}", registryConfig.toString());
+        // 初始化注册中心
+        String registryName = registryConfig.getRegistryName();
+        Registry registry = RegistryFactory.getRegistry(registryName);
+        registry.init(registryConfig);
+        log.info("注册中心 {} 初始化完毕", registryName);
+        // 服务注册
+        ClientMetaInfo clientMetaInfo = new ClientMetaInfo();
+        clientMetaInfo.setClientName(rpcConfig.getName());
+        clientMetaInfo.setClientVersion(DEFAULT_REGISTRY_VERSION);
+        clientMetaInfo.setClientAddress(String.format("%s:%s", rpcConfig.getHost(), rpcConfig.getPort()));
+        try {
+            registry.register(clientMetaInfo);
+        } catch (ExecutionException | InterruptedException e) {
+            e.printStackTrace();
+        }
+    }
+
+    /**
+     * 获取注册中心配置
+     * @return 注册中心配置
+     */
+    public static RegistryConfig getRegistryConfig() {
+        if (registryConfig == null) {
+            synchronized (RPCApplication.class) {
+                if (registryConfig == null) {
+                    init();
+                }
+            }
+        }
+        return registryConfig;
     }
 
     /**
      * 获取全局配置
+     *
      * @return 全局配置
      */
     public static RPCConfig getRpcConfig() {

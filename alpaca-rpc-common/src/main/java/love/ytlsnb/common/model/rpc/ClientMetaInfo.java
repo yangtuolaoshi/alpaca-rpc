@@ -3,10 +3,10 @@ package love.ytlsnb.common.model.rpc;
 import lombok.Data;
 
 /**
- * 服务注册信息描述
+ * 服务注册信息元数据描述
  */
 @Data
-public class ClientInfo {
+public class ClientMetaInfo {
     /**
      * 服务名称
      */
@@ -27,6 +27,6 @@ public class ClientInfo {
      * @return 键名称 /服务名称/版本/服务结点地址
      */
     public String getKey() {
-        return String.format("%s:%s:%s", clientName, clientVersion, clientAddress);
+        return String.format("%s:%s/%s", clientName, clientVersion, clientAddress);
     }
 }

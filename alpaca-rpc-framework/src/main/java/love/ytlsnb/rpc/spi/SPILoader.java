@@ -17,12 +17,12 @@ import java.util.concurrent.ConcurrentHashMap;
 @Slf4j
 public class SPILoader {
     /**
-     * 系统序列化器SPI路径
+     * 系统SPI路径
      */
     private static final String SERIALIZER_SYSTEM_DIR = "META-INF/rpc/system/";
 
     /**
-     * 用户序列化器SPI路径
+     * 用户SPI路径
      */
     private static final String SERIALIZER_USER_DIR = "META-INF/rpc/user/";
 
@@ -36,6 +36,11 @@ public class SPILoader {
      * VALUE是实现类的类类型
      */
     private static final ConcurrentHashMap<String, Map<String, Class<?>>> loadMap = new ConcurrentHashMap<>();
+
+    /**
+     * 对象的缓存
+     */
+    private static final Map<String, Object> objCache = new HashMap<>();
 
     /**
      * 根据接口名称加载它所有的实现类
@@ -92,13 +97,26 @@ public class SPILoader {
         if (implementClass == null) {
             throw new RuntimeException("未知的接口实现类: " + implementName);
         }
-        // 3. 将类实例化
-        T implementObj = null;
-        try {
-            implementObj = (T) implementClass.newInstance();
-        } catch (InstantiationException | IllegalAccessException e) {
-            e.printStackTrace();
+        // 3. 从缓存中拿
+        Object implementObj = objCache.get(implementName);
+        if (implementObj == null) {
+            // 3.1 如果未命中，就创建对象，并且放到缓存中
+            try {
+                implementObj = implementClass.newInstance();
+            } catch (InstantiationException | IllegalAccessException e) {
+                e.printStackTrace();
+            }
+            objCache.put(implementName, implementObj);
         }
-        return implementObj;
+        // 3.2 如果缓存命中，直接返回
+//        // 3. 将类实例化
+//        T implementObj = null;
+//        try {
+//            implementObj = (T) implementClass.newInstance();
+//        } catch (InstantiationException | IllegalAccessException e) {
+//            e.printStackTrace();
+//        }
+//        return implementObj;
+        return (T) implementObj;
     }
 }

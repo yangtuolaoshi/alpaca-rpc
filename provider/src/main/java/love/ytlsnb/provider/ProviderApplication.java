@@ -15,7 +15,7 @@ public class ProviderApplication {
     public static void main(String[] args) {
         // RPC框架初始化
         RPCApplication.init();
-        // 服务注册
+        // 方法注册
         LocalRegistry.register("UserClient", UserClientImpl.class);
         // 启动Web服务器
         HttpServer httpServer = new VertXHttpServer();

@@ -21,6 +21,11 @@ public class RPCRequest implements Serializable {
     private String clientName;
 
     /**
+     * 版本号
+     */
+    private String clientVersion;
+
+    /**
      * 方法名称
      */
     private String methodName;
