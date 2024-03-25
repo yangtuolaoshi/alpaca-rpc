@@ -31,4 +31,20 @@ public class RPCConfig {
      * 序列化器
      */
     private String serializer;
+
+    /**
+     * 获取服务的名称
+     * @return 服务名称:版本
+     */
+    public String getClientName() {
+        return String.format("%s:%s", name, version);
+    }
+
+    /**
+     * 获取访问地址
+     * @return 主机:端口
+     */
+    public String getAddress() {
+        return String.format("%s:%s", host, port);
+    }
 }

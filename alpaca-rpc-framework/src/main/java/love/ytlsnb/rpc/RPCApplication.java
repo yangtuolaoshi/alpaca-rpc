@@ -6,6 +6,8 @@ import love.ytlsnb.rpc.config.RPCConfig;
 import love.ytlsnb.rpc.config.RegistryConfig;
 import love.ytlsnb.rpc.registry.Registry;
 import love.ytlsnb.rpc.registry.RegistryFactory;
+import love.ytlsnb.rpc.server.HttpServer;
+import love.ytlsnb.rpc.server.VertXHttpServer;
 import love.ytlsnb.rpc.utils.ConfigUtils;
 
 import java.util.concurrent.ExecutionException;
@@ -45,12 +47,18 @@ public class RPCApplication {
         ClientMetaInfo clientMetaInfo = new ClientMetaInfo();
         clientMetaInfo.setClientName(rpcConfig.getName());
         clientMetaInfo.setClientVersion(DEFAULT_REGISTRY_VERSION);
-        clientMetaInfo.setClientAddress(String.format("%s:%s", rpcConfig.getHost(), rpcConfig.getPort()));
+        String port = rpcConfig.getPort();
+        clientMetaInfo.setClientAddress(String.format("%s:%s", rpcConfig.getHost(), port));
         try {
             registry.register(clientMetaInfo);
         } catch (ExecutionException | InterruptedException e) {
             e.printStackTrace();
         }
+        // 注册ShutdownHook
+        Runtime.getRuntime().addShutdownHook(new Thread(registry::destroy));
+        // 启动服务器
+//        HttpServer httpServer = new VertXHttpServer();
+//        httpServer.start(Integer.parseInt(port));
     }
 
     /**

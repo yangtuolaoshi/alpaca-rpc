@@ -17,6 +17,14 @@ public class ConsumerApplication {
         // 在这里通过rpc框架拿到实现类
         UserClient userClient = ClientProxyFactory.getProxyObj(UserClient.class);
         User user = userClient.getUser();
+        System.out.println("-----------------------------");
+        System.out.println();
+        System.out.println();
+        System.out.println();
         System.out.println(user);
+        System.out.println();
+        System.out.println();
+        System.out.println();
+        System.out.println("-----------------------------");
     }
 }
