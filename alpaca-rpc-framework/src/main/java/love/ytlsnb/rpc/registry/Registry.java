@@ -1,7 +1,7 @@
 package love.ytlsnb.rpc.registry;
 
-import love.ytlsnb.common.model.rpc.ClientMetaInfo;
 import love.ytlsnb.rpc.config.RegistryConfig;
+import love.ytlsnb.rpc.registry.model.ClientMetaInfo;
 
 import java.util.List;
 import java.util.concurrent.ExecutionException;

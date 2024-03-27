@@ -1,8 +1,8 @@
 package love.ytlsnb.rpc.serializer;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import love.ytlsnb.common.model.rpc.RPCRequest;
-import love.ytlsnb.common.model.rpc.RPCResponse;
+import love.ytlsnb.rpc.model.RPCRequest;
+import love.ytlsnb.rpc.model.RPCResponse;
 
 import java.io.IOException;
 

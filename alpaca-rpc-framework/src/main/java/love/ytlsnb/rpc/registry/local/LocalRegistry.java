@@ -1,4 +1,4 @@
-package love.ytlsnb.rpc.registry;
+package love.ytlsnb.rpc.registry.local;
 
 import java.util.concurrent.ConcurrentHashMap;
 

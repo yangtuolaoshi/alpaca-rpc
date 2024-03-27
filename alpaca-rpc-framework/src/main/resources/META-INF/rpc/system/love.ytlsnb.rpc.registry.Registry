@@ -1,1 +1,1 @@
-etcd=love.ytlsnb.rpc.registry.EtcdRegistry
+etcd=love.ytlsnb.rpc.registry.impl.EtcdRegistry

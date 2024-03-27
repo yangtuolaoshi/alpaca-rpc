@@ -1,10 +1,10 @@
-package love.ytlsnb.rpc.proxy;
+package love.ytlsnb.rpc.client.proxy;
 
 import cn.hutool.http.HttpRequest;
 import cn.hutool.http.HttpResponse;
-import love.ytlsnb.common.model.rpc.ClientMetaInfo;
-import love.ytlsnb.common.model.rpc.RPCRequest;
-import love.ytlsnb.common.model.rpc.RPCResponse;
+import love.ytlsnb.rpc.registry.model.ClientMetaInfo;
+import love.ytlsnb.rpc.model.RPCRequest;
+import love.ytlsnb.rpc.model.RPCResponse;
 import love.ytlsnb.rpc.RPCApplication;
 import love.ytlsnb.rpc.config.RPCConfig;
 import love.ytlsnb.rpc.config.RegistryConfig;
@@ -22,7 +22,7 @@ import static love.ytlsnb.rpc.constant.RPCConstant.DEFAULT_REGISTRY_VERSION;
 /**
  * 动态代理工厂（静态工厂）
  */
-public class ClientProxyFactory {
+public class HTTPClientProxyFactory {
     /**
      * 静态工厂获取代理对象
      * @param clientClass 服务类的类型（接口）

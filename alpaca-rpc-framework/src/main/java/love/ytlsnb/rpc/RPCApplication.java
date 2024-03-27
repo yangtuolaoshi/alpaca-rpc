@@ -1,13 +1,11 @@
 package love.ytlsnb.rpc;
 
 import lombok.extern.slf4j.Slf4j;
-import love.ytlsnb.common.model.rpc.ClientMetaInfo;
+import love.ytlsnb.rpc.registry.model.ClientMetaInfo;
 import love.ytlsnb.rpc.config.RPCConfig;
 import love.ytlsnb.rpc.config.RegistryConfig;
 import love.ytlsnb.rpc.registry.Registry;
 import love.ytlsnb.rpc.registry.RegistryFactory;
-import love.ytlsnb.rpc.server.HttpServer;
-import love.ytlsnb.rpc.server.VertXHttpServer;
 import love.ytlsnb.rpc.utils.ConfigUtils;
 
 import java.util.concurrent.ExecutionException;
@@ -43,22 +41,12 @@ public class RPCApplication {
         Registry registry = RegistryFactory.getRegistry(registryName);
         registry.init(registryConfig);
         log.info("注册中心 {} 初始化完毕", registryName);
-        // 服务注册
-        ClientMetaInfo clientMetaInfo = new ClientMetaInfo();
-        clientMetaInfo.setClientName(rpcConfig.getName());
-        clientMetaInfo.setClientVersion(DEFAULT_REGISTRY_VERSION);
-        String port = rpcConfig.getPort();
-        clientMetaInfo.setClientAddress(String.format("%s:%s", rpcConfig.getHost(), port));
-        try {
-            registry.register(clientMetaInfo);
-        } catch (ExecutionException | InterruptedException e) {
-            e.printStackTrace();
-        }
         // 注册ShutdownHook
         Runtime.getRuntime().addShutdownHook(new Thread(registry::destroy));
-        // 启动服务器
-//        HttpServer httpServer = new VertXHttpServer();
-//        httpServer.start(Integer.parseInt(port));
+    }
+
+    public static void startServer() {
+
     }
 
     /**

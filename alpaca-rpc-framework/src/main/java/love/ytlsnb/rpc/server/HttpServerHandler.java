@@ -4,12 +4,11 @@ import io.vertx.core.Handler;
 import io.vertx.core.buffer.Buffer;
 import io.vertx.core.http.HttpServerRequest;
 import io.vertx.core.http.HttpServerResponse;
-import love.ytlsnb.common.model.rpc.RPCRequest;
-import love.ytlsnb.common.model.rpc.RPCResponse;
+import love.ytlsnb.rpc.model.RPCRequest;
+import love.ytlsnb.rpc.model.RPCResponse;
 import love.ytlsnb.rpc.RPCApplication;
 import love.ytlsnb.rpc.config.RPCConfig;
-import love.ytlsnb.rpc.registry.LocalRegistry;
-import love.ytlsnb.rpc.serializer.JDKSerializer;
+import love.ytlsnb.rpc.registry.local.LocalRegistry;
 import love.ytlsnb.rpc.serializer.Serializer;
 import love.ytlsnb.rpc.serializer.SerializerFactory;
 
@@ -17,7 +16,7 @@ import java.io.IOException;
 import java.lang.reflect.Method;
 
 /**
- * 请求处理器
+ * TCP服务器消息处理器
  */
 public class HttpServerHandler implements Handler<HttpServerRequest> {
     @Override

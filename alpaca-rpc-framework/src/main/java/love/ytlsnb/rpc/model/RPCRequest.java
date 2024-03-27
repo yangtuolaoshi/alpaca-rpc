@@ -1,4 +1,4 @@
-package love.ytlsnb.common.model.rpc;
+package love.ytlsnb.rpc.model;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
