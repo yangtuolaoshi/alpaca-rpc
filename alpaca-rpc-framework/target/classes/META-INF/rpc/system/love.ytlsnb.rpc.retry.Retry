@@ -1,0 +1,2 @@
+noretry=love.ytlsnb.rpc.retry.impl.NoRetry
+fixedinterval=love.ytlsnb.rpc.retry.impl.FixedIntervalRetry

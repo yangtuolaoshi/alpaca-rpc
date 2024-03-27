@@ -1,0 +1,2 @@
+round=love.ytlsnb.rpc.loadbalancer.impl.RoundLoadBalancer
+random=love.ytlsnb.rpc.loadbalancer.impl.RandomLoadBalancer
