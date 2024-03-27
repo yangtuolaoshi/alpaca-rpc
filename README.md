@@ -8,7 +8,7 @@
 
 为了提升逼格，自定义的网络传输协议命名为**AlpacaProtocol**。该协议基于TCP协议实现，属于应用层协议。协议数据报的格式如下
 
-
+![自定义协议](https://github.com/yangtuolaoshi/alpaca-rpc/assets/165141531/a49dbeba-743c-4030-8e97-8a40e8bab22e)
 
 首部长度17字节，包含以下内容
 
