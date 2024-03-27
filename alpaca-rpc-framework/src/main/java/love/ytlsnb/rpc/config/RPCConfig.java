@@ -38,6 +38,11 @@ public class RPCConfig {
     private String loadbalancer;
 
     /**
+     * 重试机制
+     */
+    private String retry;
+
+    /**
      * 获取服务的名称
      * @return 服务名称:版本
      */
