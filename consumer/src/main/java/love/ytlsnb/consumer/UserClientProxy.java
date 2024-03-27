@@ -6,7 +6,7 @@ import love.ytlsnb.common.client.UserClient;
 import love.ytlsnb.common.model.User;
 import love.ytlsnb.rpc.model.RPCRequest;
 import love.ytlsnb.rpc.model.RPCResponse;
-import love.ytlsnb.rpc.serializer.JDKSerializer;
+import love.ytlsnb.rpc.serializer.impl.JDKSerializer;
 import love.ytlsnb.rpc.serializer.Serializer;
 
 import java.io.IOException;

@@ -1,8 +1,9 @@
-package love.ytlsnb.rpc.serializer;
+package love.ytlsnb.rpc.serializer.impl;
 
 import com.esotericsoftware.kryo.Kryo;
 import com.esotericsoftware.kryo.io.Input;
 import com.esotericsoftware.kryo.io.Output;
+import love.ytlsnb.rpc.serializer.Serializer;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;

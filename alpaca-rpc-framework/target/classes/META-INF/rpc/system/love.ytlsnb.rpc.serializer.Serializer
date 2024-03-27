@@ -1,3 +1,3 @@
-jdk=love.ytlsnb.rpc.serializer.JDKSerializer
-hessian=love.ytlsnb.rpc.serializer.HessianSerializer
-json=love.ytlsnb.rpc.serializer.JSONSerializer
+jdk=love.ytlsnb.rpc.serializer.impl.JDKSerializer
+hessian=love.ytlsnb.rpc.serializer.impl.HessianSerializer
+json=love.ytlsnb.rpc.serializer.impl.JSONSerializer

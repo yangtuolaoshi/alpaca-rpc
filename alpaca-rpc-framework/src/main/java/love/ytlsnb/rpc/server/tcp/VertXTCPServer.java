@@ -1,5 +1,6 @@
 package love.ytlsnb.rpc.server.tcp;
 
+import io.vertx.core.AbstractVerticle;
 import io.vertx.core.Vertx;
 import io.vertx.core.net.NetServer;
 import io.vertx.core.parsetools.RecordParser;

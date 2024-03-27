@@ -25,21 +25,22 @@ public class ProviderApplication {
         // 方法注册
         LocalRegistry.register("UserClient", UserClientImpl.class);
         // 服务注册
-        RPCConfig rpcConfig = RPCApplication.getRpcConfig();
-        ClientMetaInfo clientMetaInfo = new ClientMetaInfo();
-        clientMetaInfo.setClientName(rpcConfig.getName());
-        clientMetaInfo.setClientVersion(DEFAULT_REGISTRY_VERSION);
-        String port = rpcConfig.getPort();
-        clientMetaInfo.setClientAddress(String.format("%s:%s", rpcConfig.getHost(), port));
-        Registry registry = RegistryFactory.getRegistry(RPCApplication.getRegistryConfig().getRegistryName());
-        try {
-            registry.register(clientMetaInfo);
-        } catch (ExecutionException | InterruptedException e) {
-            e.printStackTrace();
-        }
-        // 启动Web服务器
-        VertXTCPServer tcpServer = new VertXTCPServer();
-        tcpServer.start(6660);
+        RPCApplication.startServer();
+//        RPCConfig rpcConfig = RPCApplication.getRpcConfig();
+//        ClientMetaInfo clientMetaInfo = new ClientMetaInfo();
+//        clientMetaInfo.setClientName(rpcConfig.getName());
+//        clientMetaInfo.setClientVersion(DEFAULT_REGISTRY_VERSION);
+//        String port = rpcConfig.getPort();
+//        clientMetaInfo.setClientAddress(String.format("%s:%s", rpcConfig.getHost(), port));
+//        Registry registry = RegistryFactory.getRegistry(RPCApplication.getRegistryConfig().getRegistryName());
+//        try {
+//            registry.register(clientMetaInfo);
+//        } catch (ExecutionException | InterruptedException e) {
+//            e.printStackTrace();
+//        }
+//        // 启动Web服务器
+//        VertXTCPServer tcpServer = new VertXTCPServer();
+//        tcpServer.start(6660);
 //        HttpServer httpServer = new VertXHttpServer();
 //        httpServer.start(6660);
     }

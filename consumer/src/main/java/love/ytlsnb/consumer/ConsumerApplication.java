@@ -17,15 +17,17 @@ public class ConsumerApplication {
         // 在这里通过rpc框架拿到实现类
 //        UserClient userClient = HTTPClientProxyFactory.getProxyObj(UserClient.class);
         UserClient userClient = TCPClientProxyFactory.getProxyObj(UserClient.class);
-        User user = userClient.getUser();
-        System.out.println("-----------------------------");
-        System.out.println();
-        System.out.println();
-        System.out.println();
-        System.out.println(user);
-        System.out.println();
-        System.out.println();
-        System.out.println();
-        System.out.println("-----------------------------");
+        for (int i = 0; i < 10; i++) {
+            User user = userClient.getUser();
+            System.out.println("-----------------------------");
+            System.out.println();
+            System.out.println();
+            System.out.println();
+            System.out.println(user);
+            System.out.println();
+            System.out.println();
+            System.out.println();
+            System.out.println("-----------------------------");
+        }
     }
 }

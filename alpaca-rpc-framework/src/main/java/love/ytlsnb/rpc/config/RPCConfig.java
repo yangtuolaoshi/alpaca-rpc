@@ -33,6 +33,11 @@ public class RPCConfig {
     private String serializer;
 
     /**
+     * 负载均衡器
+     */
+    private String loadbalancer;
+
+    /**
      * 获取服务的名称
      * @return 服务名称:版本
      */

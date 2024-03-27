@@ -9,6 +9,8 @@ import lombok.extern.slf4j.Slf4j;
 import love.ytlsnb.rpc.RPCApplication;
 import love.ytlsnb.rpc.config.RPCConfig;
 import love.ytlsnb.rpc.config.RegistryConfig;
+import love.ytlsnb.rpc.loadbalancer.LoadBalancer;
+import love.ytlsnb.rpc.loadbalancer.LoadBalancerFactory;
 import love.ytlsnb.rpc.model.RPCRequest;
 import love.ytlsnb.rpc.model.RPCResponse;
 import love.ytlsnb.rpc.protocol.AlpacaProtocol;
@@ -27,6 +29,7 @@ import love.ytlsnb.rpc.server.tcp.decorator.TCPBufferHandlerDecorator;
 import java.io.IOException;
 import java.lang.reflect.Method;
 import java.lang.reflect.Proxy;
+import java.util.HashMap;
 import java.util.List;
 import java.util.concurrent.CompletableFuture;
 
@@ -39,11 +42,11 @@ import static love.ytlsnb.rpc.constant.RPCConstant.DEFAULT_REGISTRY_VERSION;
 public class TCPClientProxyFactory {
     /**
      * 拿到代理对象
-     * @param clientClass
-     * @param <T>
-     * @return
+     * @param clientClass 接口的类对象
+     * @param <T> 接口的类型
+     * @return 代理对象
      */
-    public static <T> T getProxyObj(Class<?> clientClass) {
+    public static <T> T getProxyObj(Class<T> clientClass) {
         return (T) Proxy.newProxyInstance(
                 clientClass.getClassLoader(),
                 new Class[]{clientClass},
@@ -73,8 +76,22 @@ public class TCPClientProxyFactory {
                         throw new RuntimeException("没有可用的服务");
                     }
                     // TODO 暂时先取第一个
-                    ClientMetaInfo clientMetaInfo = clientMetaInfos.get(0);
+                    // 拿负载均衡器
+                    String loadBalancerName = rpcConfig.getLoadbalancer();
+                    LoadBalancer loadBalancer = LoadBalancerFactory.getLoadBalancer(loadBalancerName);
+                    HashMap<String, Object> requestParams = new HashMap<>();
+                    requestParams.put("alpaca", method.getName());// 这里实际上可以随便插
+                    ClientMetaInfo clientMetaInfo = loadBalancer.select(requestParams, clientMetaInfos);
                     String clientAddress = clientMetaInfo.getClientAddress();
+                    System.out.println("-----------------------------");
+                    System.out.println();
+                    System.out.println();
+                    System.out.println();
+                    log.error("这次请求的地址是 {}", clientAddress);
+                    System.out.println();
+                    System.out.println();
+                    System.out.println();
+                    System.out.println("-----------------------------");
                     // 发送TCP请求
                     Vertx vertx = Vertx.vertx();
                     NetClient netClient = vertx.createNetClient();

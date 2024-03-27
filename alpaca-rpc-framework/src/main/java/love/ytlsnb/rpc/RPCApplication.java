@@ -6,6 +6,7 @@ import love.ytlsnb.rpc.config.RPCConfig;
 import love.ytlsnb.rpc.config.RegistryConfig;
 import love.ytlsnb.rpc.registry.Registry;
 import love.ytlsnb.rpc.registry.RegistryFactory;
+import love.ytlsnb.rpc.server.tcp.VertXTCPServer;
 import love.ytlsnb.rpc.utils.ConfigUtils;
 
 import java.util.concurrent.ExecutionException;
@@ -46,7 +47,22 @@ public class RPCApplication {
     }
 
     public static void startServer() {
-
+        // 服务注册
+        RPCConfig rpcConfig = RPCApplication.getRpcConfig();
+        ClientMetaInfo clientMetaInfo = new ClientMetaInfo();
+        clientMetaInfo.setClientName(rpcConfig.getName());
+        clientMetaInfo.setClientVersion(DEFAULT_REGISTRY_VERSION);
+        String port = rpcConfig.getPort();
+        clientMetaInfo.setClientAddress(String.format("%s:%s", rpcConfig.getHost(), port));
+        Registry registry = RegistryFactory.getRegistry(RPCApplication.getRegistryConfig().getRegistryName());
+        try {
+            registry.register(clientMetaInfo);
+        } catch (ExecutionException | InterruptedException e) {
+            e.printStackTrace();
+        }
+        // 启动Web服务器
+        VertXTCPServer tcpServer = new VertXTCPServer();
+        tcpServer.start(Integer.parseInt(rpcConfig.getPort()));
     }
 
     /**

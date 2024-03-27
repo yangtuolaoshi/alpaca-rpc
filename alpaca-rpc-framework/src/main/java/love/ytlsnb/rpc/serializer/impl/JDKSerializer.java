@@ -1,4 +1,6 @@
-package love.ytlsnb.rpc.serializer;
+package love.ytlsnb.rpc.serializer.impl;
+
+import love.ytlsnb.rpc.serializer.Serializer;
 
 import java.io.*;
 
